@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irregular Verbs Master</title>
+    <meta name="description" content="불규칙 동사 완벽 암기 애플리케이션">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="app-container">
+        <header class="glass-header">
+            <div class="logo">
+                <i class="fa-solid fa-bolt"></i>
+                <h1>VerbMaster</h1>
+            </div>
+            
+            <nav class="main-nav">
+                <button class="nav-btn active" data-target="memorize-view">
+                    <i class="fa-solid fa-list"></i> 암기표
+                </button>
+                <button class="nav-btn" data-target="test-view">
+                    <i class="fa-solid fa-pen-nib"></i> 테스트
+                </button>
+                <button class="nav-btn" data-target="review-view">
+                    <i class="fa-solid fa-book-open"></i> 오답노트
+                </button>
+            </nav>
+
+            <div class="auth-container">
+                <button id="login-btn" class="primary-btn">
+                    <i class="fa-brands fa-google"></i> 구글 로그인
+                </button>
+                <div id="user-profile" class="user-profile hidden">
+                    <img id="user-avatar" src="" alt="Profile" class="avatar">
+                    <span id="user-name"></span>
+                    <button id="logout-btn" class="icon-btn" title="로그아웃">
+                        <i class="fa-solid fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <main class="content-area glass-panel">
+            <!-- View 1: Memorize -->
+            <section id="memorize-view" class="view-section active">
+                <div class="view-header">
+                    <h2>불규칙 동사 암기표</h2>
+                    <p>80개의 필수 불규칙 동사를 완벽하게 외워보세요.</p>
+                </div>
+                <div class="table-container">
+                    <table class="verbs-table">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>현재형 (Infinitive)</th>
+                                <th>과거형 (Past)</th>
+                                <th>과거분사 (Participle)</th>
+                                <th>뜻</th>
+                            </tr>
+                        </thead>
+                        <tbody id="verbs-table-body">
+                            <!-- Populated by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- View 2: Test -->
+            <section id="test-view" class="view-section hidden">
+                <div class="view-header">
+                    <h2>실력 테스트</h2>
+                    <p>한글 뜻을 보고 동사의 3단 변화를 입력하세요.</p>
+                </div>
+                
+                <div class="test-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="test-progress"></div>
+                    </div>
+                    <div class="test-stats">
+                        <span id="test-count">1 / 80</span>
+                        <div class="score">
+                            <span class="correct-text"><i class="fa-solid fa-check"></i> <span id="correct-count">0</span></span>
+                            <span class="wrong-text"><i class="fa-solid fa-xmark"></i> <span id="wrong-count">0</span></span>
+                        </div>
+                    </div>
+
+                    <div class="flashcard glass-card">
+                        <div class="card-meaning" id="test-meaning">뜻</div>
+                        
+                        <form id="test-form" class="test-form">
+                            <div class="input-group">
+                                <label for="input-present">현재형 (Infinitive)</label>
+                                <input type="text" id="input-present" required autocomplete="off" spellcheck="false" placeholder="ex) go">
+                            </div>
+                            <div class="input-group">
+                                <label for="input-past">과거형 (Past)</label>
+                                <input type="text" id="input-past" required autocomplete="off" spellcheck="false" placeholder="ex) went">
+                            </div>
+                            <div class="input-group">
+                                <label for="input-participle">과거분사 (Participle)</label>
+                                <input type="text" id="input-participle" required autocomplete="off" spellcheck="false" placeholder="ex) gone">
+                            </div>
+                            
+                            <div id="feedback-message" class="feedback-message hidden"></div>
+                            
+                            <button type="submit" id="submit-test-btn" class="primary-btn large-btn">정답 확인</button>
+                            <button type="button" id="next-test-btn" class="secondary-btn large-btn hidden">다음 문제 <i class="fa-solid fa-arrow-right"></i></button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div id="test-result-screen" class="result-screen hidden">
+                    <h3>테스트 완료!</h3>
+                    <div class="final-score" id="final-score">80 / 80</div>
+                    <p>수고하셨습니다. 오답노트에서 틀린 문제를 복습해보세요.</p>
+                    <button id="restart-test-btn" class="primary-btn">다시 시작</button>
+                </div>
+            </section>
+
+            <!-- View 3: Review -->
+            <section id="review-view" class="view-section hidden">
+                <div class="view-header">
+                    <h2>나만의 오답노트</h2>
+                    <p>자주 틀리는 단어를 모아 집중적으로 학습하세요.</p>
+                </div>
+                
+                <div class="login-prompt hidden" id="review-login-prompt">
+                    <i class="fa-solid fa-lock" style="font-size: 3rem; margin-bottom: 1rem; color: var(--text-muted);"></i>
+                    <h3>로그인이 필요합니다</h3>
+                    <p>오답 기록을 저장하고 불러오려면 구글 로그인이 필요합니다.</p>
+                </div>
+
+                <div class="review-content hidden" id="review-content-area">
+                    <div class="filter-container">
+                        <span class="filter-label">틀린 횟수 모아보기:</span>
+                        <div class="filter-chips">
+                            <button class="chip active" data-filter="all">전체 오답</button>
+                            <button class="chip" data-filter="1">1번 이상</button>
+                            <button class="chip" data-filter="3">3번 이상</button>
+                            <button class="chip" data-filter="5">5번 이상</button>
+                            <button class="chip" data-filter="7">7번 이상</button>
+                            <button class="chip" data-filter="9">9번 이상</button>
+                        </div>
+                    </div>
+                    
+                    <div class="table-container mt-4">
+                        <table class="verbs-table">
+                            <thead>
+                                <tr>
+                                    <th>현재형 (Infinitive)</th>
+                                    <th>과거형 (Past)</th>
+                                    <th>과거분사 (Participle)</th>
+                                    <th>뜻</th>
+                                    <th>오답 횟수</th>
+                                </tr>
+                            </thead>
+                            <tbody id="review-table-body">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div id="no-wrong-answers" class="empty-state hidden">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <p>틀린 단어가 없습니다. 아주 훌륭해요!</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Load Data first -->
+    <script src="data.js"></script>
+
+    <!-- Firebase SDK (Compat version for local file execution) -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore-compat.js"></script>
+
+    <!-- Main App Logic -->
+    <script src="app.js"></script>
+</body>
+</html>
