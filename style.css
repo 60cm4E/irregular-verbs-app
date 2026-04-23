@@ -575,6 +575,28 @@ button {
     .glass-card {
         padding: 2rem 1.5rem;
     }
+    
+    /* Table Mobile Optimizations */
+    .table-container {
+        border-radius: 12px;
+    }
+    
+    .verbs-table th, .verbs-table td {
+        padding: 0.6rem 0.3rem;
+        font-size: 0.85rem;
+    }
+    
+    .verbs-table th {
+        font-size: 0.8rem;
+        white-space: normal;
+        word-break: keep-all;
+    }
+    
+    /* Hide "No." column on small screens to save space */
+    .verbs-table th:first-child,
+    .verbs-table td:first-child {
+        display: none;
+    }
 }
 
 @media (max-width: 400px) {
@@ -588,5 +610,14 @@ button {
     }
     .card-meaning {
         font-size: 1.5rem;
+    }
+    
+    .verbs-table th, .verbs-table td {
+        padding: 0.4rem 0.2rem;
+        font-size: 0.75rem;
+    }
+    
+    .verbs-table th {
+        font-size: 0.7rem;
     }
 }
