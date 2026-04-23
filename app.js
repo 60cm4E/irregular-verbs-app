@@ -1,5 +1,5 @@
 const firebaseConfig = {
-    apiKey: "AIzaSyALdgUM1BwfmM4aRuzN_B2YlDiUruBxGXw",
+    apiKey: "AIzaSyAlDgUM1BwfmM4aRuzN_B2YlDiUruBxGXw",
     authDomain: "irregular-verbs-c3809.firebaseapp.com",
     projectId: "irregular-verbs-c3809",
     storageBucket: "irregular-verbs-c3809.firebasestorage.app",
