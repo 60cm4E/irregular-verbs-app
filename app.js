@@ -1,11 +1,11 @@
-// TODO: Replace with your actual Firebase config
 const firebaseConfig = {
-    // apiKey: "YOUR_API_KEY",
-    // authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    // projectId: "YOUR_PROJECT_ID",
-    // storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    // messagingSenderId: "YOUR_SENDER_ID",
-    // appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyALdgUM1BwfmM4aRuzN_B2YlDiUruBxGXw",
+    authDomain: "irregular-verbs-c3809.firebaseapp.com",
+    projectId: "irregular-verbs-c3809",
+    storageBucket: "irregular-verbs-c3809.firebasestorage.app",
+    messagingSenderId: "444203395650",
+    appId: "1:444203395650:web:f62686f30ee88dc67c1bdb",
+    measurementId: "G-30MGSJ29TX"
 };
 
 // Initialize Firebase (wrapped in try-catch in case config is empty)
