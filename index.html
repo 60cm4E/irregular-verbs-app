@@ -40,6 +40,9 @@
                 <button class="nav-btn" data-target="review-view">
                     <i class="fa-solid fa-book-open"></i> 오답노트
                 </button>
+                <button class="nav-btn" data-target="print-view">
+                    <i class="fa-solid fa-print"></i> 시험지
+                </button>
             </nav>
 
             <div class="auth-container">
@@ -180,6 +183,44 @@
                         <i class="fa-solid fa-check-circle"></i>
                         <p>틀린 단어가 없습니다. 아주 훌륭해요!</p>
                     </div>
+                </div>
+            </section>
+
+            <!-- View 4: Print Exam -->
+            <section id="print-view" class="view-section hidden">
+                <div class="view-header">
+                    <h2>시험지 인쇄</h2>
+                    <p>불규칙 동사 시험지와 답안지를 인쇄하세요.</p>
+                </div>
+
+                <div class="print-options">
+                    <div class="print-option-group">
+                        <label class="print-option-label">출제 범위:</label>
+                        <div class="range-selectors">
+                            <select id="print-range-start" class="print-select">
+                            </select>
+                            <span class="range-sep">~</span>
+                            <select id="print-range-end" class="print-select">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="print-option-group">
+                        <label class="print-option-label">출제 순서:</label>
+                        <div class="print-order-btns">
+                            <button class="chip active" id="order-sequential">순서대로</button>
+                            <button class="chip" id="order-random">랜덤</button>
+                        </div>
+                    </div>
+                    <button id="generate-exam-btn" class="primary-btn">
+                        <i class="fa-solid fa-file-lines"></i> 시험지 생성
+                    </button>
+                    <button id="print-exam-btn" class="secondary-btn" style="display:none;">
+                        <i class="fa-solid fa-print"></i> 인쇄하기
+                    </button>
+                </div>
+
+                <div id="exam-preview" class="exam-preview" style="display:none;">
+                    <!-- Exam sheet and answer key rendered by JS -->
                 </div>
             </section>
         </main>

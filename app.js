@@ -387,7 +387,149 @@ if (isFirebaseConfigured) {
     });
 }
 
+// ==============================
+// Print Exam Logic
+// ==============================
+let printOrderRandom = false;
+
+function setupPrintView() {
+    const startSelect = document.getElementById('print-range-start');
+    const endSelect = document.getElementById('print-range-end');
+    
+    // Populate range selects
+    verbsData.forEach(v => {
+        const opt1 = document.createElement('option');
+        opt1.value = v.id;
+        opt1.textContent = `${v.id}. ${v.meaning}`;
+        startSelect.appendChild(opt1);
+        
+        const opt2 = document.createElement('option');
+        opt2.value = v.id;
+        opt2.textContent = `${v.id}. ${v.meaning}`;
+        endSelect.appendChild(opt2);
+    });
+    
+    endSelect.value = verbsData[verbsData.length - 1].id;
+    
+    // Order toggle
+    const seqBtn = document.getElementById('order-sequential');
+    const randBtn = document.getElementById('order-random');
+    
+    seqBtn.addEventListener('click', () => {
+        printOrderRandom = false;
+        seqBtn.classList.add('active');
+        randBtn.classList.remove('active');
+    });
+    
+    randBtn.addEventListener('click', () => {
+        printOrderRandom = true;
+        randBtn.classList.add('active');
+        seqBtn.classList.remove('active');
+    });
+    
+    // Generate
+    document.getElementById('generate-exam-btn').addEventListener('click', generateExam);
+    
+    // Print
+    document.getElementById('print-exam-btn').addEventListener('click', () => {
+        window.print();
+    });
+}
+
+function generateExam() {
+    const startId = parseInt(document.getElementById('print-range-start').value);
+    const endId = parseInt(document.getElementById('print-range-end').value);
+    
+    if (startId > endId) {
+        alert('시작 번호가 끝 번호보다 클 수 없습니다.');
+        return;
+    }
+    
+    let examVerbs = verbsData.filter(v => v.id >= startId && v.id <= endId);
+    
+    if (printOrderRandom) {
+        examVerbs = shuffleArray(examVerbs);
+    }
+    
+    const preview = document.getElementById('exam-preview');
+    const totalCount = examVerbs.length;
+    const rangeLabel = `${startId}번 ~ ${endId}번 (${totalCount}문제)`;
+    
+    // Build exam sheet (blanks)
+    let examHTML = `
+        <div class="exam-sheet">
+            <div class="exam-sheet-title">불규칙 동사 시험지</div>
+            <div class="exam-sheet-subtitle">${rangeLabel}</div>
+            <div class="exam-name-line">이름: ________________</div>
+            <table class="exam-table">
+                <thead>
+                    <tr>
+                        <th style="width:40px">번호</th>
+                        <th>뜻</th>
+                        <th>현재형 (Infinitive)</th>
+                        <th>과거형 (Past)</th>
+                        <th>과거분사 (Past Participle)</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+    
+    examVerbs.forEach((v, i) => {
+        examHTML += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td class="meaning-cell">${v.meaning}</td>
+                        <td class="blank-cell"></td>
+                        <td class="blank-cell"></td>
+                        <td class="blank-cell"></td>
+                    </tr>`;
+    });
+    
+    examHTML += `
+                </tbody>
+            </table>
+        </div>`;
+    
+    // Build answer key
+    let answerHTML = `
+        <div class="exam-sheet">
+            <div class="exam-sheet-title">불규칙 동사 답안지</div>
+            <div class="exam-sheet-subtitle">${rangeLabel}</div>
+            <div style="margin-bottom:1rem;"><span class="answer-key-label">정답</span></div>
+            <table class="exam-table">
+                <thead>
+                    <tr>
+                        <th style="width:40px">번호</th>
+                        <th>뜻</th>
+                        <th>현재형 (Infinitive)</th>
+                        <th>과거형 (Past)</th>
+                        <th>과거분사 (Past Participle)</th>
+                    </tr>
+                </thead>
+                <tbody>`;
+    
+    examVerbs.forEach((v, i) => {
+        answerHTML += `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td class="meaning-cell">${v.meaning}</td>
+                        <td class="answer-cell">${v.present}</td>
+                        <td class="answer-cell">${v.past}</td>
+                        <td class="answer-cell">${v.participle}</td>
+                    </tr>`;
+    });
+    
+    answerHTML += `
+                </tbody>
+            </table>
+        </div>`;
+    
+    preview.innerHTML = examHTML + answerHTML;
+    preview.style.display = 'block';
+    document.getElementById('print-exam-btn').style.display = 'inline-flex';
+}
+
 // Init
 window.addEventListener('DOMContentLoaded', () => {
     renderMemorizeTable();
+    setupPrintView();
 });

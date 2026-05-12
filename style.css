@@ -621,3 +621,255 @@ button {
         font-size: 0.7rem;
     }
 }
+
+/* ==============================
+   Print View (Exam Sheet)
+   ============================== */
+.print-options {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius);
+    border: 1px solid var(--glass-border);
+}
+
+.print-option-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.print-option-label {
+    font-weight: 600;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+.range-selectors {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.range-sep {
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.print-select {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--text-main);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    padding: 0.5rem 0.8rem;
+    font-family: inherit;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.print-select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.print-select option {
+    background: #1e293b;
+    color: #f8fafc;
+}
+
+.print-order-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* Exam Preview (screen) */
+.exam-preview {
+    margin-top: 1.5rem;
+}
+
+.exam-sheet {
+    background: white;
+    color: #111;
+    border-radius: 12px;
+    padding: 40px;
+    margin-bottom: 2rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+
+.exam-sheet-title {
+    text-align: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    color: #111;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+.exam-sheet-subtitle {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.exam-name-line {
+    text-align: right;
+    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.8rem;
+}
+
+.exam-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.exam-table th {
+    background: #f0f0f0;
+    padding: 8px 6px;
+    border: 1px solid #bbb;
+    font-weight: 700;
+    text-align: center;
+    color: #222;
+    font-size: 0.85rem;
+}
+
+.exam-table td {
+    padding: 7px 6px;
+    border: 1px solid #ccc;
+    text-align: center;
+    color: #222;
+    vertical-align: middle;
+}
+
+.exam-table .meaning-cell {
+    font-weight: 600;
+    background: #fafafa;
+    word-break: keep-all;
+}
+
+.exam-table .blank-cell {
+    min-width: 90px;
+    height: 32px;
+    background: #fff;
+}
+
+.exam-table .answer-cell {
+    color: #1a56db;
+    font-weight: 600;
+}
+
+.exam-table tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+.exam-divider {
+    border: none;
+    border-top: 3px dashed #ccc;
+    margin: 2rem 0;
+}
+
+.answer-key-label {
+    display: inline-block;
+    background: #ef4444;
+    color: white;
+    padding: 4px 16px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+/* ==============================
+   @media print
+   ============================== */
+@media print {
+    /* Hide everything except the exam sheets */
+    body {
+        background: white !important;
+        color: black !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    .background-blobs,
+    .glass-header,
+    .view-header,
+    .print-options,
+    .auth-container,
+    #memorize-view,
+    #test-view,
+    #review-view {
+        display: none !important;
+    }
+
+    .app-container {
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+
+    .glass-panel {
+        background: none !important;
+        backdrop-filter: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        min-height: auto !important;
+    }
+
+    #print-view {
+        display: block !important;
+    }
+
+    .exam-preview {
+        display: block !important;
+    }
+
+    .exam-sheet {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 15px 20px !important;
+        margin-bottom: 0 !important;
+        page-break-after: always;
+        break-after: page;
+    }
+
+    .exam-sheet:last-child {
+        page-break-after: avoid;
+        break-after: avoid;
+    }
+
+    .exam-divider {
+        display: none !important;
+    }
+
+    .exam-table th {
+        background: #f0f0f0 !important;
+    }
+
+    .exam-table .meaning-cell {
+        background: #fafafa !important;
+    }
+
+    .exam-table .answer-cell {
+        color: #1a56db !important;
+    }
+
+    #print-exam-btn,
+    #generate-exam-btn {
+        display: none !important;
+    }
+
+    @page {
+        size: A4;
+        margin: 10mm;
+    }
+}
