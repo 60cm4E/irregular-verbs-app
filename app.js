@@ -455,72 +455,68 @@ function generateExam() {
     const totalCount = examVerbs.length;
     const rangeLabel = `${startId}번 ~ ${endId}번 (${totalCount}문제)`;
     
-    // Build exam sheet (blanks)
+    // Split into two halves for 2-column layout
+    const half = Math.ceil(examVerbs.length / 2);
+    const leftVerbs = examVerbs.slice(0, half);
+    const rightVerbs = examVerbs.slice(half);
+    
+    // Helper: build a compact table
+    function buildTable(verbs, startNum, isAnswer) {
+        let html = `<table class="exam-table compact">
+            <thead><tr>
+                <th class="col-no">No</th>
+                <th class="col-meaning">뜻</th>
+                <th class="col-verb">현재형</th>
+                <th class="col-verb">과거형</th>
+                <th class="col-verb">과거분사</th>
+            </tr></thead><tbody>`;
+        
+        verbs.forEach((v, i) => {
+            if (isAnswer) {
+                html += `<tr>
+                    <td>${startNum + i}</td>
+                    <td class="meaning-cell">${v.meaning}</td>
+                    <td class="answer-cell">${v.present}</td>
+                    <td class="answer-cell">${v.past}</td>
+                    <td class="answer-cell">${v.participle}</td>
+                </tr>`;
+            } else {
+                html += `<tr>
+                    <td>${startNum + i}</td>
+                    <td class="meaning-cell">${v.meaning}</td>
+                    <td class="blank-cell"></td>
+                    <td class="blank-cell"></td>
+                    <td class="blank-cell"></td>
+                </tr>`;
+            }
+        });
+        
+        html += `</tbody></table>`;
+        return html;
+    }
+    
+    // Build exam sheet (blanks) - 2 columns
     let examHTML = `
         <div class="exam-sheet">
             <div class="exam-sheet-title">불규칙 동사 시험지</div>
             <div class="exam-sheet-subtitle">${rangeLabel}</div>
             <div class="exam-name-line">이름: ________________</div>
-            <table class="exam-table">
-                <thead>
-                    <tr>
-                        <th style="width:40px">번호</th>
-                        <th>뜻</th>
-                        <th>현재형 (Infinitive)</th>
-                        <th>과거형 (Past)</th>
-                        <th>과거분사 (Past Participle)</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-    
-    examVerbs.forEach((v, i) => {
-        examHTML += `
-                    <tr>
-                        <td>${i + 1}</td>
-                        <td class="meaning-cell">${v.meaning}</td>
-                        <td class="blank-cell"></td>
-                        <td class="blank-cell"></td>
-                        <td class="blank-cell"></td>
-                    </tr>`;
-    });
-    
-    examHTML += `
-                </tbody>
-            </table>
+            <div class="exam-two-col">
+                <div class="exam-col">${buildTable(leftVerbs, 1, false)}</div>
+                <div class="exam-col">${buildTable(rightVerbs, half + 1, false)}</div>
+            </div>
         </div>`;
     
-    // Build answer key
+    // Build answer key - 2 columns
     let answerHTML = `
         <div class="exam-sheet">
             <div class="exam-sheet-title">불규칙 동사 답안지</div>
             <div class="exam-sheet-subtitle">${rangeLabel}</div>
-            <div style="margin-bottom:1rem;"><span class="answer-key-label">정답</span></div>
-            <table class="exam-table">
-                <thead>
-                    <tr>
-                        <th style="width:40px">번호</th>
-                        <th>뜻</th>
-                        <th>현재형 (Infinitive)</th>
-                        <th>과거형 (Past)</th>
-                        <th>과거분사 (Past Participle)</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-    
-    examVerbs.forEach((v, i) => {
-        answerHTML += `
-                    <tr>
-                        <td>${i + 1}</td>
-                        <td class="meaning-cell">${v.meaning}</td>
-                        <td class="answer-cell">${v.present}</td>
-                        <td class="answer-cell">${v.past}</td>
-                        <td class="answer-cell">${v.participle}</td>
-                    </tr>`;
-    });
-    
-    answerHTML += `
-                </tbody>
-            </table>
+            <div style="margin-bottom:0.3rem;"><span class="answer-key-label">정답</span></div>
+            <div class="exam-two-col">
+                <div class="exam-col">${buildTable(leftVerbs, 1, true)}</div>
+                <div class="exam-col">${buildTable(rightVerbs, half + 1, true)}</div>
+            </div>
         </div>`;
     
     preview.innerHTML = examHTML + answerHTML;

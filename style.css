@@ -696,75 +696,102 @@ button {
     background: white;
     color: #111;
     border-radius: 12px;
-    padding: 40px;
+    padding: 24px 20px;
     margin-bottom: 2rem;
     box-shadow: 0 8px 30px rgba(0,0,0,0.3);
 }
 
 .exam-sheet-title {
     text-align: center;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     font-weight: 700;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.15rem;
     color: #111;
     font-family: 'Noto Sans KR', sans-serif;
 }
 
 .exam-sheet-subtitle {
     text-align: center;
-    font-size: 0.95rem;
+    font-size: 0.8rem;
     color: #666;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 .exam-name-line {
     text-align: right;
-    font-size: 1rem;
-    margin-bottom: 1.2rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
     color: #333;
     border-bottom: 1px solid #ccc;
-    padding-bottom: 0.8rem;
+    padding-bottom: 0.4rem;
+}
+
+/* Two-column layout */
+.exam-two-col {
+    display: flex;
+    gap: 12px;
+}
+
+.exam-col {
+    flex: 1;
+    min-width: 0;
 }
 
 .exam-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.95rem;
+    font-size: 0.72rem;
 }
 
 .exam-table th {
     background: #f0f0f0;
-    padding: 8px 6px;
+    padding: 3px 3px;
     border: 1px solid #bbb;
     font-weight: 700;
     text-align: center;
     color: #222;
-    font-size: 0.85rem;
+    font-size: 0.68rem;
+    white-space: nowrap;
 }
 
 .exam-table td {
-    padding: 7px 6px;
+    padding: 3px 3px;
     border: 1px solid #ccc;
     text-align: center;
     color: #222;
     vertical-align: middle;
+    line-height: 1.2;
+}
+
+.exam-table .col-no {
+    width: 22px;
+}
+
+.exam-table .col-meaning {
+    width: auto;
+}
+
+.exam-table .col-verb {
+    width: 60px;
 }
 
 .exam-table .meaning-cell {
     font-weight: 600;
     background: #fafafa;
     word-break: keep-all;
+    font-size: 0.72rem;
 }
 
 .exam-table .blank-cell {
-    min-width: 90px;
-    height: 32px;
+    min-width: 50px;
+    height: 18px;
     background: #fff;
 }
 
 .exam-table .answer-cell {
     color: #1a56db;
     font-weight: 600;
+    font-size: 0.72rem;
 }
 
 .exam-table tbody tr:nth-child(even) {
@@ -836,7 +863,7 @@ button {
     .exam-sheet {
         box-shadow: none !important;
         border-radius: 0 !important;
-        padding: 15px 20px !important;
+        padding: 8px 10px !important;
         margin-bottom: 0 !important;
         page-break-after: always;
         break-after: page;
@@ -847,20 +874,56 @@ button {
         break-after: avoid;
     }
 
+    .exam-two-col {
+        gap: 8px !important;
+    }
+
     .exam-divider {
         display: none !important;
     }
 
+    .exam-table {
+        font-size: 0.68rem !important;
+    }
+
     .exam-table th {
         background: #f0f0f0 !important;
+        padding: 2px 2px !important;
+        font-size: 0.62rem !important;
+    }
+
+    .exam-table td {
+        padding: 2.5px 2px !important;
     }
 
     .exam-table .meaning-cell {
         background: #fafafa !important;
+        font-size: 0.68rem !important;
+    }
+
+    .exam-table .blank-cell {
+        height: 16px !important;
     }
 
     .exam-table .answer-cell {
         color: #1a56db !important;
+        font-size: 0.68rem !important;
+    }
+
+    .exam-sheet-title {
+        font-size: 1.1rem !important;
+        margin-bottom: 0.1rem !important;
+    }
+
+    .exam-sheet-subtitle {
+        font-size: 0.7rem !important;
+        margin-bottom: 0.15rem !important;
+    }
+
+    .exam-name-line {
+        font-size: 0.75rem !important;
+        margin-bottom: 0.3rem !important;
+        padding-bottom: 0.2rem !important;
     }
 
     #print-exam-btn,
@@ -870,6 +933,6 @@ button {
 
     @page {
         size: A4;
-        margin: 10mm;
+        margin: 8mm;
     }
 }
