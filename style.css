@@ -262,7 +262,7 @@ button {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
     min-height: 600px;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .view-section {
